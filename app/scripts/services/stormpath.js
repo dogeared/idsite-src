@@ -57,7 +57,7 @@ angular.module('stormpathIdpApp')
       });
       var site = self.getSite();
       if (site) {
-        $rootScope.logoUrl = 'images/' + site + 'logo.png';
+        $rootScope.logoUrl = 'images/' + site + '-logo.png';
       }
     }
 
