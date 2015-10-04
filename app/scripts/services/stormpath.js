@@ -50,15 +50,14 @@ angular.module('stormpathIdpApp')
             var m = idSiteModel;
             self.idSiteModel = m;
             self.providers = self.providers.concat(m.providers);
+            if (m.logoUrl.indexOf('placeholder.placeholder') >= 0) {
+              m.logoUrl = m.logoUrl.replace('placeholder.placeholder', self.getSite());
+            }
             $rootScope.logoUrl = m.logoUrl;
             init.resolve();
           }
         });
       });
-      var site = self.getSite();
-      if (site) {
-        $rootScope.logoUrl = 'images/' + site + '-logo.png';
-      }
     }
 
     this.samlLogin = function samlLogin(accountStore, cb){
@@ -161,11 +160,10 @@ angular.module('stormpathIdpApp')
     };
 
     this.getSite = function getSite(){
-      var state = client.jwtPayload.state; 
-      if (state && state.startsWith('site:')) {
-        return state.substring(state.indexOf(':') + 1);
-      }
-      return undefined;
+      var parser = document.createElement('a');
+      parser.href = document.referrer;
+      // only works for .com
+      return parser.hostname.replace('.com','').split('.').pop()
     };
 
     this.getProvider = function getProvider(providerId){
