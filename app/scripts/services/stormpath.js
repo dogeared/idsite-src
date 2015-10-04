@@ -163,7 +163,7 @@ angular.module('stormpathIdpApp')
       var parser = document.createElement('a');
       parser.href = document.referrer;
       // only works for .com
-      return parser.hostname.replace('.com','').split('.').pop()
+      return parser.hostname.replace('.com','').split('.').pop() + '.com'
     };
 
     this.getProvider = function getProvider(providerId){
