@@ -50,8 +50,8 @@ angular.module('stormpathIdpApp')
             var m = idSiteModel;
             self.idSiteModel = m;
             self.providers = self.providers.concat(m.providers);
-            if (m.logoUrl.indexOf('placeholder.placeholder') >= 0) {
-              m.logoUrl = m.logoUrl.replace('placeholder.placeholder', self.getSite());
+            if (m.logoUrl.indexOf('https://placeholder.placeholder') >= 0) {
+              m.logoUrl = m.logoUrl.replace('https://placeholder.placeholder', self.getSite());
             }
             $rootScope.logoUrl = m.logoUrl;
             init.resolve();
@@ -160,10 +160,8 @@ angular.module('stormpathIdpApp')
     };
 
     this.getSite = function getSite(){
-      var parser = document.createElement('a');
-      parser.href = document.referrer;
-      // only works for .com
-      return parser.hostname.replace('.com','').split('.').pop() + '.com'
+      var url = new URL(document.referrer);
+      return url.origin;
     };
 
     this.getProvider = function getProvider(providerId){
